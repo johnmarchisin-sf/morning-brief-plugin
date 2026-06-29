@@ -1,0 +1,20 @@
+{
+  "name": "morning-brief",
+  "version": "0.2.0",
+  "description": "A personal executive-assistant morning brief. Triages your email and calendar (and optionally chat), surfaces your top priorities, and emails you one concise brief every morning. Provider agnostic: works with Gmail or Outlook, Google or Outlook calendar, Slack or Teams. Sets up a working folder and context files for brand-new accounts.",
+  "author": {
+    "name": "John Marchisin",
+    "email": "jcmarchisin@gmail.com"
+  },
+  "homepage": "https://github.com/johnmarchisin-cx/morning-brief-plugin",
+  "repository": "https://github.com/johnmarchisin-cx/morning-brief-plugin",
+  "license": "MIT",
+  "keywords": [
+    "morning brief",
+    "executive assistant",
+    "daily digest",
+    "inbox triage",
+    "calendar",
+    "productivity"
+  ]
+}
