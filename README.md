@@ -52,41 +52,30 @@ In the Claude desktop app, plugins and marketplaces can also be managed from
 
 ## For the maintainer (John) — shipping updates
 
-The whole point of this layout is fast iteration: edit, commit, push, and your tester pulls.
+The developer loop (branch, dry run against a fake profile, merge, release, roll back) lives
+in **`docs/dev-workflow.md`**. Read that for the full flow. In short:
 
-1. **First push** (create the GitHub repo first, named `morning-brief-plugin`, public):
+1. Make edits under `plugins/morning-brief/` on a branch, and dry run against
+   `test/sample-profile.md` with delivery set to chat so nothing gets sent.
+2. Note the change under `Unreleased` in `docs/CHANGELOG.md`.
+3. Merge to `main`, then cut a release from a synced `main`:
 
    ```
-   cd morning-brief-plugin
-   git init
-   git add .
-   git commit -m "Morning Brief plugin v0.2.0"
-   git branch -M main
-   git remote add origin https://github.com/johnmarchisin-cx/morning-brief-plugin.git
-   git push -u origin main
+   scripts/release.sh 0.2.1 "Describe the change"
    ```
 
-2. **Each tweak afterward**:
-   - Make your edits under `plugins/morning-brief/`.
-   - Bump the `version` in BOTH `plugins/morning-brief/.claude-plugin/plugin.json` and the
-     matching entry in `.claude-plugin/marketplace.json` (version bumps are what signal an
-     update). Use semver, e.g. `0.2.0` -> `0.2.1`.
-   - Commit and push:
+   The script bumps the version in both manifests (which is what signals an update), commits,
+   tags, and pushes.
+4. Tell your tester to run `/plugin marketplace update morning-brief-plugin`.
 
-     ```
-     git add .
-     git commit -m "Describe the change"
-     git push
-     ```
-
-   - Tell your tester to run `/plugin marketplace update morning-brief-plugin`.
+Tester feedback is logged and tracked to resolution in **`docs/feedback.md`**.
 
 ### Repo layout
 
 ```
 morning-brief-plugin/
 ├── .claude-plugin/
-│   └── marketplace.json          # marketplace manifest (lists the plugin)
+│   └── marketplace.json          # marketplace manifest (lists the plugin + version)
 ├── plugins/
 │   └── morning-brief/            # the plugin itself
 │       ├── .claude-plugin/plugin.json
@@ -95,6 +84,14 @@ morning-brief-plugin/
 │       └── skills/
 │           ├── setup/            # onboarding + cold-start provisioning
 │           └── daily-brief/      # the daily run
+├── scripts/
+│   └── release.sh                # version bump + commit + tag + push
+├── test/
+│   └── sample-profile.md         # fake profile for safe dry runs
+├── docs/
+│   ├── dev-workflow.md           # the maintainer loop
+│   ├── CHANGELOG.md              # what changed per version
+│   └── feedback.md               # tester feedback log
 ├── README.md                     # this file
 ├── LICENSE
 └── .gitignore
