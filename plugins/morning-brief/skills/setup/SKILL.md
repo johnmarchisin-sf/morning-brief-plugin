@@ -9,6 +9,27 @@ Set up a personalized executive-assistant morning brief for the user, or reconfi
 
 Keep the conversation in plain language. Do not expose file paths or schema details unless asked. Frame everything as what the brief will do for them.
 
+## Step 0 — Pre-flight audit (verify, do not assume)
+
+Before building anything, check that the environment is actually ready and report the result
+to the user, item by item, as pass or needs action. Do not assert things are set up; verify
+them and fix the gaps together first. This is what keeps a setup fast instead of stalling
+halfway through.
+
+- **Email connector scope.** Confirm the email source is connected with inbox READ access,
+  not only draft or compose. A draft-only connection returns "requires additional
+  permissions" on inbox reads and has to be reconnected and re-approved for viewing mail.
+- **Calendar connector.** Confirm the calendar source is connected, or note that it will be
+  read through the browser (Step 3 fallback).
+- **Claude in Chrome extension.** Confirm it is installed and signed in. It is required for
+  sent-to-inbox delivery and for reading calendar in the browser. Prefer a single connected
+  Chrome profile, signed into the sites the brief needs, so runs do not stop to ask which
+  browser to use.
+- **Sources that need their own MCP server.** If a chosen source is not click-to-connect (see
+  Step 3), verify its prerequisites before continuing rather than discovering them mid-setup.
+
+Report what passes and what needs action, walk the user through the gaps, then continue.
+
 ## Step 1 — Read what you already know
 
 Before asking anything, gather context so you do not ask for things you can already infer:
@@ -53,10 +74,37 @@ If the user says "whatever you think is best," propose specific defaults (deep-f
 For each source the user chose that is not already connected, help them connect it:
 
 - Search the connector registry for the chosen provider and suggest the connector for them to connect.
+- When connecting email, make sure the connection grants inbox READ access, not only draft or compose. A draft-only connection cannot triage the inbox and will fail the morning run.
 - If no connector exists for a source (common for calendar), the brief can read it via the browser instead (e.g. the calendar web app) using the same browser access used to send the email. Tell the user this is the fallback.
-- Email send-to-inbox requires browser control of their email web app. Confirm the browser extension is connected, or that they will approve it on first run.
+- Email send-to-inbox requires browser control of their email web app. Confirm the browser extension is connected, or that they will approve it on first run. Prefer a single connected Chrome profile so runs do not add a "which browser?" step.
 
 Do not enter any passwords or credentials yourself. Direct the user to authenticate in the connector's own flow.
+
+### Sources that need their own MCP server
+
+Some sources are not click-to-connect and need a local MCP server (for example a provider with
+no built-in connector). These require setup before the brief can read them. Do not assume any
+of it is in place; verify each step and fix gaps with the user. Follow the specific server's own
+README for exact values; the shape below is what generalizes:
+
+1. **Runtime.** Confirm the server's runtime meets its minimum. A common trap on macOS is the
+   bundled Python 3.9, which is too old for the `mcp` package; install a current Python first if
+   so.
+2. **Install the server.** Clone or install it to a known, stable path, and install its
+   dependencies in an isolated environment kept outside cloud-synced folders (e.g. not inside
+   iCloud).
+3. **Credentials.** Create the provider's developer app and mint its credentials as the server
+   documents, then place them exactly where it expects (often a file named `.env` in its root).
+   Test that authentication actually succeeds; do not just confirm the file exists.
+4. **Register it.** On Claude Desktop, add the server to
+   `~/Library/Application Support/Claude/claude_desktop_config.json` (there is no `claude` CLI on
+   a normal Desktop machine, so registration is a config-file edit), then fully quit with Cmd+Q
+   and reopen Claude so it loads.
+5. **Verify.** Confirm the server's tools appear and a real call works before wiring the brief to
+   it.
+
+When you hand the user shell commands, strip comment lines first: zsh does not treat `#` as a
+comment on pasted input, so commented lines error.
 
 ## Step 4 — Build the profile and create the scheduled task
 
@@ -67,10 +115,15 @@ Do not enter any passwords or credentials yourself. Direct the user to authentic
    - schedule: a cron expression for their chosen time (local time). Daily = `M H * * *`; weekdays = `M H * * 1-5`.
    - prompt: the FULL run logic from the `daily-brief` skill, with the assembled profile block pasted in at the top as the editable "PROFILE" section. The prompt must be self-contained because each scheduled run starts fresh. Substitute the user's actual `~~email`, `~~calendar`, and `~~chat` providers and the exact connector tool names for the providers they connected.
 4. If a `morning-brief` task already exists (reconfigure), UPDATE it instead of creating a duplicate.
+5. Tell the user how scheduled runs behave: the task only fires while the Claude Desktop app is open, so if the app is closed at run time the brief runs at next launch.
 
 ## Step 5 — Offer a test run
 
 Offer to run it once now so the user can see the result and pre-approve the browser/email tools (so future runs do not pause for permissions). If they accept, run the `daily-brief` logic immediately and confirm the brief was sent or drafted.
+
+The most reliable way to store approvals for the scheduled task itself is to click "Run now"
+once in the Scheduled panel after the task is created. That persists the connector and browser
+approvals against the task, so the automatic runs do not stop to ask for permissions.
 
 ## Updating later
 
