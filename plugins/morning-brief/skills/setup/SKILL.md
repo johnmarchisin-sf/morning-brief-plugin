@@ -64,8 +64,9 @@ Use AskUserQuestion. Ask only for what you could not infer in Step 1 (on a cold 
 3. **Work style** — deep focus in the morning, admin first thing, meeting-driven, or flexible. This sets how the brief frames the day (protect mornings vs clear comms first vs lead with meeting prep).
 4. **What matters to them** — the high-priority signals (e.g. messages from their manager, customer escalations, inbound leads, interviews, deadlines). Ask for their important people and senders.
 5. **Email categories** — how they want the inbox bucketed (e.g. inbound leads, system errors, customer issues, personal). See `references/email-categorization.md` and walk them through it. Also capture what to always exclude (spam, promotions, newsletters, anything they flag).
-6. **Delivery** — how they want it: a real email sent to their inbox (lands like normal mail), a draft they review, or shown in chat. Sent-to-inbox uses the browser to compose and send from their email.
-7. **Schedule** — what time, and whether daily or weekdays only.
+6. **Custom sections (optional)** — anything they track that deserves its own named section in the brief, beyond the standard categories. A custom section is actionable, not just a bucket: it pulls specific fields out of each matching item and applies a rule for what needs attention (e.g. a recruiter tracking resume requests per candidate: name, the role they are attached to, and the timeline they stated). For each one, capture the fields in the profile template's CUSTOM SECTIONS block: title, sources, what a match looks like, the fields to extract, and the action rule. Most users skip this at first setup; mention it exists and move on unless they bite.
+7. **Delivery** — how they want it: a real email sent to their inbox (lands like normal mail), a draft they review, or shown in chat. Sent-to-inbox uses the browser to compose and send from their email.
+8. **Schedule** — what time, and whether daily or weekdays only.
 
 If the user says "whatever you think is best," propose specific defaults (deep-focus AM, sent-to-inbox at 7am daily, exclude promotions/social/spam) and confirm.
 
@@ -128,3 +129,9 @@ approvals against the task, so the automatic runs do not stop to ask for permiss
 ## Updating later
 
 When the user's situation changes (new job, different systems, new important people), they just say "update my morning brief profile" and you re-run this skill: read the existing task's profile block (and `about-me.md` / `morning-brief-profile.md` if present), change only what they tell you, and update the task and the files. Remind them that the scheduled task's PROFILE block is the single source of truth, with `morning-brief-profile.md` as the editable copy they can open any time.
+
+Adding a custom section is the most common update: the user describes something they want
+tracked as its own section ("I want the brief to capture X"), and you translate it into a
+CUSTOM SECTIONS entry (Step 2, item 6) in their existing profile. No re-onboarding; add the
+entry, update the task and files, and offer a test run so they can see the new section on
+real data.
