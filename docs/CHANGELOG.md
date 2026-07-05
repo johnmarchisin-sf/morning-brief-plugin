@@ -17,7 +17,7 @@ Each entry is grouped by area so setup, run, and error handling changes stay eas
 While working, add lines under `Unreleased`. When you cut a release, move them under a new
 version heading with the version number.
 
-## Unreleased
+## 0.3.0
 
 ### Daily brief
 - Added profile-driven custom sections: a CUSTOM SECTIONS block in the profile defines named,
