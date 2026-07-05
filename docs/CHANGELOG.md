@@ -19,7 +19,16 @@ version heading with the version number.
 
 ## Unreleased
 
+### Daily brief
+- Added profile-driven custom sections: a CUSTOM SECTIONS block in the profile defines named,
+  actionable sections (title, sources, what a match looks like, fields to extract per item, and
+  an action rule for what needs attention), and the brief collects and renders them during the
+  normal triage pass. Empty sections are skipped by default. Unlike a category, a custom section
+  extracts detail and drives action instead of just counting matches. (Tester 2)
+
 ### Setup
+- Onboarding and profile updates can now define custom sections; adding one to an existing
+  profile is documented as the standard light update path, no re-onboarding. (Tester 2)
 - Added a Step 0 pre-flight audit: setup now verifies connectors and environment and reports
   gaps before building, instead of assuming readiness. (Tester 1)
 - Call out that email must be connected with inbox READ access, not only draft or compose, so a

@@ -38,6 +38,18 @@ style notes (e.g. no dashes in prose).
 - Surface only direct mentions, threads awaiting the user's reply, and decisions/asks
   that matter. Summarize the rest as a count. Do not dump channel chatter.
 
+## Step 2b — Custom sections (only if the profile defines any)
+- While triaging in Steps 1 and 2, also match items against each CUSTOM SECTIONS entry:
+  scan that entry's sources for its "Watch for" pattern and extract the "Capture per
+  item" fields for every match. One pass over the data; do not re-pull sources.
+- A field with no stated value stays blank — never infer a name, timeline, or commitment
+  the message does not contain.
+- Apply the entry's "Action" rule to decide which matches need attention today versus
+  are informational. Items needing attention also count toward FIRES if they meet the
+  Step 1 bar.
+- An item can appear in both a custom section and a category count; the custom section
+  is where its extracted detail lives, so do not duplicate the detail elsewhere.
+
 ## Step 3 — Calendar
 - Read today's events (via connector, or the calendar web app in the browser).
 - List each event with its time. Flag conflicts, back-to-back blocks, and anything
@@ -67,6 +79,12 @@ Keep it tight and scannable. Readable in under 90 seconds. Honor house style.
 
   {CHAT SNAPSHOT — only if chat configured}
   - {channel}: {mentions / threads awaiting reply}
+
+  {CUSTOM SECTIONS — one block per profile entry with matches}
+  {TITLE FROM PROFILE}
+  - {captured fields as one line per item, needs-attention items first}
+  (Skip a section with no matches unless its profile entry says "Show when empty: yes",
+  then render the title with one line: "Nothing new.")
 
   LATER TODAY (does not need your morning)
   - {batched non-urgent items}

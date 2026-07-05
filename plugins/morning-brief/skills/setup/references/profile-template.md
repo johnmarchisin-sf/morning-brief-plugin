@@ -39,6 +39,19 @@ EMAIL CATEGORIES (how to bucket the inbox each morning)
 - {Category name}: {...}
   (See email-categorization.md for how to learn and refine these.)
 
+CUSTOM SECTIONS (optional; "none" if unused)
+Each entry becomes its own named section in the brief. Unlike a category, a custom
+section is actionable: it extracts specific fields per item and says what to do with
+them, instead of just counting matches.
+- Title: {section heading as it should appear in the brief}
+  Sources: {email | chat | both; name the specific channels/DMs if chat}
+  Watch for: {what a match looks like, in plain language}
+  Capture per item: {the fields to extract, e.g. person; what it relates to; stated
+    timeline or next step}
+  Action: {what makes an item need attention today, e.g. "flag anyone who promised
+    something and went quiet"; omit for FYI-only}
+  Show when empty: {yes | no (default no — skip the section on quiet days)}
+
 ALWAYS EXCLUDE (never bring into the brief)
 - Spam and trash.
 - Promotions and social mail unless it clearly matters.

@@ -28,6 +28,26 @@ Where tester feedback lives and gets tracked to resolution. Newest round first.
 
 ## Rounds
 
+### 2026-07-05 — Tester 2 (Megan Deas, RingCentral / custom MCP variant of 0.2.0)
+
+Context: Megan runs the live morning brief on the manual RingCentral MCP setup. Request came
+in via the Cerca side ("Tech Team" message), verbatim ask: add a section to her brief that
+captures candidate resume request activity from her RingCentral messages.
+
+- [planned] Add a "CDS Send Outs" / "Resume Request" section to Megan's brief. Capture per
+  candidate: name, the job they are attached to, and their stated timeline where one exists
+  ("getting resume over immediately", "would like to review company first", "getting you my
+  resume by X date"). She is open to extending it, including candidates who already submitted
+  resumes or sent them by email.
+  Area: daily brief
+  Version tested: 0.2.0
+  Resolution: see CHANGELOG Unreleased (profile-driven custom sections). The plugin ships the
+  generic capability: a CUSTOM SECTIONS block in the profile (title, sources, watch pattern,
+  fields to extract, action rule) that the brief collects and renders. Megan's CDS section is
+  the pilot: it gets defined in her profile locally when the update runs on her machine, so
+  nothing candidate- or recruiter-specific is hardcoded in the plugin. Same split as the
+  round 1 custom MCP decision.
+
 ### 2026-07-01 — Tester 1 (RingCentral / custom MCP variant of 0.2.0)
 
 Context: this tester used a chat source (RingCentral) wired through a custom MCP server
